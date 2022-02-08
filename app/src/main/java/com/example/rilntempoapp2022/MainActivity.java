@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
+import java.awt.font.TextAttribute;
 import java.net.HttpURLConnection;
 
 import retrofit2.Call;
@@ -18,10 +20,20 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     IEdfApi edfApi;
 
+    // views
+    private TextView redDaysTv;
+    private TextView whiteDaysTv;
+    private TextView blueDaysTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Init views
+        redDaysTv = findViewById(R.id.red_days_tv);
+        whiteDaysTv = findViewById(R.id.white_days_tv);
+        blueDaysTv = findViewById(R.id.blue_days_tv);
 
         // Init retrofit client
         Retrofit retrofitClient = ApiClient.get();
@@ -43,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(LOG_TAG,"nb red days = " + tempoDaysLeft.getParamNbJRouge());
                         Log.d(LOG_TAG,"nb white days = " + tempoDaysLeft.getParamNbJBlanc());
                         Log.d(LOG_TAG,"nb blue days = " + tempoDaysLeft.getParamNbJBleu());
+                        redDaysTv.setText(String.valueOf(tempoDaysLeft.getParamNbJRouge()));
+                        whiteDaysTv.setText(String.valueOf(tempoDaysLeft.getParamNbJBlanc()));
+                        blueDaysTv.setText(String.valueOf(tempoDaysLeft.getParamNbJBleu()));
                     }
                 }
 
