@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.awt.font.TextAttribute;
 import java.net.HttpURLConnection;
@@ -42,6 +43,42 @@ public class MainActivity extends AppCompatActivity {
             edfApi = retrofitClient.create(IEdfApi.class);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateNbTempoDaysLeft();
+        updateNbTempoDaysColors();
+    }
+
+    private void updateNbTempoDaysColors() {
+        if (edfApi != null) {
+
+            // create call
+            Call<TempoDaysColor> call = edfApi.getTempoDaysColor(Tools.getNowDate("yyyy-MM-dd"), IEdfApi.EDF_TEMPO_ALERT_TYPE);
+
+            // launch call
+            call.enqueue(new Callback<TempoDaysColor>() {
+                @Override
+                public void onResponse(@NonNull Call<TempoDaysColor> call, @NonNull Response<TempoDaysColor> response) {
+                    TempoDaysColor tempoDaysColor = response.body();
+                    if (response.code() == HttpURLConnection.HTTP_OK && tempoDaysColor != null) {
+                        Log.d(LOG_TAG, "J day color = " + tempoDaysColor.getJourJ().getTempo().toString());
+                        Log.d(LOG_TAG, "J1 day color = " + tempoDaysColor.getJourJ1().getTempo().toString());
+
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<TempoDaysColor> call, @NonNull Throwable t) {
+                    Log.e(LOG_TAG, "Call to 'getTempoDaysColor' request failed");
+                }
+            });
+        }
+    }
+
+    private void updateNbTempoDaysLeft() {
         if (edfApi != null) {
             // Create call
             Call<TempoDaysLeft> call = edfApi.getTempoDaysLeft(IEdfApi.EDF_TEMPO_ALERT_TYPE);
@@ -68,6 +105,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-
     }
+
 }
