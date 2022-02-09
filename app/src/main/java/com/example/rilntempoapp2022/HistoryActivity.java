@@ -2,6 +2,7 @@ package com.example.rilntempoapp2022;
 
 import static com.example.rilntempoapp2022.Tools.getNowDate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,16 +70,19 @@ public class HistoryActivity extends AppCompatActivity {
             // Launch async call
             call.enqueue(new Callback<TempoHistory>() {
                 @Override
-                public void onResponse(Call<TempoHistory> call, Response<TempoHistory> response) {
+                public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
+                    tempoDates.clear();
                     if (response.code() == HttpURLConnection.HTTP_OK && response.body() != null) {
                         TempoHistory tempoHistory = response.body();
                         Log.d(LOG_TAG, "nb elements = "+ tempoHistory.getTempoDates().size());
+                        tempoDates.addAll(tempoHistory.getTempoDates());
                         //showTempoHistoryDates(tempoHistory.getTempoDates());
                     }
+                    tempoDateAdapter.notifyDataSetChanged();
                 }
 
                 @Override
-                public void onFailure(Call<TempoHistory> call, Throwable t) {
+                public void onFailure(@NonNull Call<TempoHistory> call, @NonNull Throwable t) {
                     Log.e(LOG_TAG, "Call to 'getTempoHistory' failed");
                 }
             });
