@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,6 +22,9 @@ public class HistoryActivity extends AppCompatActivity {
 
     private RecyclerView tempoDateRv;
     private TempoDateAdapter tempoDateAdapter;
+
+    // Data model
+    List<TempoDate> tempoDates = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +40,8 @@ public class HistoryActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         tempoDateRv.setLayoutManager(layoutManager);
 
-        tempoDateAdapter = new TempoDateAdapter();
-        //tempoDateRv.setAdapter(tempoDateAdapter);
+        tempoDateAdapter = new TempoDateAdapter(tempoDates);
+        tempoDateRv.setAdapter(tempoDateAdapter);
 
     }
 
