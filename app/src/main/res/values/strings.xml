@@ -6,4 +6,5 @@
     <string name="not_available">ND</string>
     <string name="history_bt">Historique</string>
     <string name="not_set">not set</string>
+    <string name="history_activity_title">Historique Tempo</string>
 </resources>
