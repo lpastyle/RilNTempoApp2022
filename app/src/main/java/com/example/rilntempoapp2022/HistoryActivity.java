@@ -3,6 +3,8 @@ package com.example.rilntempoapp2022;
 import static com.example.rilntempoapp2022.Tools.getNowDate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +19,26 @@ import retrofit2.Response;
 public class HistoryActivity extends AppCompatActivity {
     private static final String LOG_TAG = HistoryActivity.class.getSimpleName();
 
+    private RecyclerView tempoDateRv;
+    private TempoDateAdapter tempoDateAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        // find view
+        tempoDateRv = findViewById(R.id.tempo_history_rv);
+
+        // Init recycler view
+        tempoDateRv.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        tempoDateRv.setLayoutManager(layoutManager);
+
+        tempoDateAdapter = new TempoDateAdapter();
+        //tempoDateRv.setAdapter(tempoDateAdapter);
+
     }
 
     @Override
