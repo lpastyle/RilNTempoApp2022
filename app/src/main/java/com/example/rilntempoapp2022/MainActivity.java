@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     IEdfApi edfApi;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView blueDaysTv;
     private DayColorView todayDcv;
     private DayColorView tomorrowDcv;
+    private Button historyBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         blueDaysTv = findViewById(R.id.blue_days_tv);
         todayDcv = findViewById(R.id.today_dcv);
         tomorrowDcv = findViewById(R.id.tomorrow_dcv);
+        historyBt = findViewById(R.id.history_bt);
+        historyBt.setOnClickListener(this);
 
         // Init retrofit client
         Retrofit retrofitClient = ApiClient.get();
@@ -114,10 +118,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showHistory(View view) {
+  /* obsolete way of proceeding with XML attribute 'onclick'
+   public void showHistory(View view) {
         Log.d(LOG_TAG,"showHistory()");
         Intent intent = new Intent();
         intent.setClass(this, HistoryActivity.class);
         startActivity(intent);
+    } */
+
+    @Override
+    public void onClick(View view) {
+        Log.d(LOG_TAG, "onClick()");
+        if (view.getId() == R.id.history_bt) {
+            Intent intent = new Intent();
+            intent.setClass(this, HistoryActivity.class);
+            startActivity(intent);
+        }
     }
 }
