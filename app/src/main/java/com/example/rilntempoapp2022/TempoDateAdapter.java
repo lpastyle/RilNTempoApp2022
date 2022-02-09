@@ -1,5 +1,6 @@
 package com.example.rilntempoapp2022;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.List;
 public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.ViewHolder> {
 
     List<TempoDate> tempoDates;
+    Context context;
 
-    public TempoDateAdapter(List<TempoDate> tempoDates) {
+    public TempoDateAdapter(Context context, List<TempoDate> tempoDates) {
         this.tempoDates = tempoDates;
+        this.context = context;
     }
 
     @NonNull
@@ -28,7 +32,9 @@ public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        TempoDate curItem = tempoDates.get(position);
+        holder.dateTv.setText(curItem.getDate());
+        holder.colorFl.setBackgroundColor(ContextCompat.getColor(context, curItem.getCouleur().getResId()));
     }
 
     @Override
