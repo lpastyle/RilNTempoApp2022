@@ -22,7 +22,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    IEdfApi edfApi;
+    public static IEdfApi edfApi;
 
     // views
     private TextView redDaysTv;
