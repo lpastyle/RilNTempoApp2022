@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 /**
  * Custom view to display tempo color
  */
-class DayColorView extends View {
+public class DayColorView extends View {
     private Context context;
     static final float CIRCLE_SCALE = 0.9f; // half circle will occupy 90% of view
 
